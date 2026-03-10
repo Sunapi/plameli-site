@@ -32,10 +32,10 @@ const steps = [
 ];
 ---
 
-<Section id="process" size="base">
+<Section id="process" size="tight">
   <Container>
     <SectionHeading
-      class="mb-10"
+      class="mb-6 lg:mb-8"
       align="center"
       eyebrow="Как работим"
       title="Ясен и лесен път към финансова сигурност"
@@ -44,14 +44,14 @@ const steps = [
 
     <div class="relative mx-auto max-w-4xl">
       <div class="absolute bottom-0 left-[27px] top-0 hidden w-px bg-[var(--color-border)] md:block"></div>
-      <div class="space-y-8 md:space-y-10">
+      <div class="space-y-6 md:space-y-7">
         {
           steps.map((step) => (
             <article class="relative flex gap-6 md:gap-8">
               <span class="relative z-10 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-lg font-semibold text-white shadow-lg">
                 {step.number}
               </span>
-              <div class="flex-1 pb-8 pt-2">
+              <div class="flex-1 pb-5 pt-1">
                 <h3 class="text-xl font-semibold text-[var(--color-text)]">{step.title}</h3>
                 <p class="mt-2 leading-relaxed text-[var(--color-text-muted)]">{step.description}</p>
               </div>
