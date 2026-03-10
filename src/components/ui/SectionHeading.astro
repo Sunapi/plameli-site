@@ -1,0 +1,42 @@
+---
+interface Props {
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+  align?: "left" | "center";
+  titleAs?: string;
+  class?: string;
+  invert?: boolean;
+  eyebrowClass?: string;
+  titleClass?: string;
+  descriptionClass?: string;
+}
+
+const {
+  eyebrow,
+  title,
+  description,
+  align = "left",
+  titleAs: TitleTag = "h2",
+  class: className = "",
+  invert = false,
+  eyebrowClass: eyebrowClassName = "",
+  titleClass: titleClassName = "",
+  descriptionClass: descriptionClassName = "",
+} = Astro.props;
+
+const alignClass = align === "center" ? "mx-auto max-w-2xl text-center" : "max-w-2xl";
+const eyebrowClass = invert ? "text-white/80" : "text-[var(--color-accent)]";
+const titleClass = invert ? "text-[#fff7f3]" : "text-[var(--color-text)]";
+const descriptionClass = invert ? "text-white/80" : "text-[var(--color-text-muted)]";
+---
+
+<div class:list={[alignClass, className]}>
+  {eyebrow && <p class:list={["text-sm font-medium uppercase tracking-[0.18em]", eyebrowClass, eyebrowClassName]}>{eyebrow}</p>}
+  {title && (
+    <TitleTag class:list={["mt-3 [font-family:'Playfair_Display',serif] text-3xl font-medium tracking-tight sm:text-4xl", titleClass, titleClassName]}>
+      {title}
+    </TitleTag>
+  )}
+  {description && <p class:list={["mt-4 text-lg leading-relaxed", descriptionClass, descriptionClassName]}>{description}</p>}
+</div>

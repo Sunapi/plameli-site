@@ -1,63 +1,130 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import Card from "./ui/Card.astro";
+import Badge from "./ui/Badge.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+import StatItem from "./ui/StatItem.astro";
+
+const iconMap = {
+  calendar: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M7 2v3M17 2v3M3 9h18M5 5h14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  globe: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 21c4.971 0 9-4.029 9-9s-4.029-9-9-9-9 4.029-9 9 4.029 9 9 9Z" fill="none" stroke="currentColor" stroke-width="1.8"/>
+      <path d="M3 12h18M12 3c2.7 2.4 4.2 5.4 4.2 9S14.7 18.6 12 21M12 3C9.3 5.4 7.8 8.4 7.8 12s1.5 6.6 4.2 9" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  `,
+  stack: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="m12 4 8 4-8 4-8-4 8-4Zm8 8-8 4-8-4m16 4-8 4-8-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  ledger: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M6 4h12a2 2 0 0 1 2 2v12H8a2 2 0 0 0-2 2V4Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M8 20a2 2 0 0 1-2-2V6a2 2 0 0 0-2-2M10 8h6M10 12h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  `,
+  scale: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 4v16M6 7h12M9 20h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <path d="m7 7-3 5h6l-3-5Zm10 0-3 5h6l-3-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </svg>
+  `,
+  users: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8.5 10v-2a4 4 0 0 0-3-3.87M15.5 4.13a3.5 3.5 0 0 1 0 6.74" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+};
+
 const stats = [
-  { value: "15+", label: "Години опит", icon: "C" },
-  { value: "500+", label: "Обслужени клиенти", icon: "U" },
-  { value: "100%", label: "Съответствие", icon: "S" },
+  { value: "2017", label: "Година на създаване", icon: "calendar" },
+  { value: "3", label: "Езика за консултации", icon: "globe" },
+  { value: "6+", label: "Основни направления", icon: "stack" },
 ];
 
 const previewCards = [
-  { title: "Данъчно съответствие", text: "Винаги актуално", tone: "accent", icon: "S" },
-  { title: "Лична подкрепа", text: "Индивидуален подход", tone: "primary", icon: "U" },
-  { title: "15+ години", text: "Доказан опит", tone: "soft", icon: "C" },
+  { title: "Счетоводно обслужване", text: "Ежедневна и текуща подкрепа", icon: "ledger" },
+  { title: "Данъчни консултации", text: "Компетентни и коректни решения", icon: "scale" },
+  { title: "Пейрол и ТРЗ", text: "Надеждно администриране", icon: "users" },
 ];
 ---
 
-<section class="hero">
-  <div class="hero-grid container">
-    <div class="hero-copy">
-      <p class="eyebrow-pill">
-        <span class="status-dot"></span>
-        Доверен партньор на 500+ бизнеса в България
-      </p>
-      <h1>Вашият надежден счетоводен партньор в България</h1>
-      <p class="hero-lead">
-        Професионални счетоводни услуги, данъчни консултации и бизнес подкрепа.
-        Говорим вашия език. Консултации на български, украински
-        и руски език.
-      </p>
-      <div class="hero-actions">
-        <a class="button button-primary" href="#contact">Заяви консултация</a>
-        <a class="button button-secondary" href="#services">Виж услугите</a>
-      </div>
-      <div class="hero-stats">
-        {
-          stats.map((stat) => (
-            <div class="stat-card">
-              <span class="stat-icon">{stat.icon}</span>
-              <div>
-                <p class="stat-value">{stat.value}</p>
-                <p class="stat-label">{stat.label}</p>
-              </div>
-            </div>
-          ))
-        }
-      </div>
-    </div>
+<Section size="tight" class="relative overflow-hidden bg-[var(--color-background)] pt-10 pb-8 lg:pt-14 lg:pb-10">
+  <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,transparent_0%,transparent_49%,rgba(228,218,203,0.55)_49%,rgba(228,218,203,0.55)_51%,transparent_51%,transparent_100%)] bg-[length:120px_100%] opacity-30"></div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="hero-visual-frame">
-        {
-          previewCards.map((card, index) => (
-            <article class={`preview-card preview-${card.tone} preview-offset-${index + 1}`}>
-              <span class="preview-icon">{card.icon}</span>
-              <div>
-                <h2>{card.title}</h2>
-                <p>{card.text}</p>
-              </div>
-            </article>
-          ))
-        }
+  <Container class="relative">
+    <Grid class="items-start gap-10 lg:grid-cols-2 lg:gap-14">
+      <div class="max-w-[38rem] pt-2">
+        <Badge as="p" class="px-4 py-1.5 text-sm">
+          <span class="h-2 w-2 rounded-full bg-[var(--color-accent)]"></span>
+          Счетоводна къща в София с консултации на три езика
+        </Badge>
+
+        <SectionHeading
+          class="mt-6"
+          titleAs="h1"
+          title="Професионално счетоводно и данъчно обслужване за вашия бизнес"
+          description="Добре дошли в Пламели Финанс ЕООД. Ние сме счетоводна къща в София, специализирана в счетоводството и данъчното законодателство, и ви съпровождаме при реализирането на вашите бизнес идеи чрез счетоводни услуги и консултации на български, украински и руски език."
+          titleClass="mt-0 max-w-[12ch] text-4xl leading-[0.98] sm:text-5xl lg:text-[4.15rem]"
+          descriptionClass="mt-6 max-w-[34rem] text-[1.075rem] lg:text-[1.14rem]"
+        />
+
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
+          <a class="inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-8 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-primary-dark)]" href="#contact">
+            Свържете се с нас
+          </a>
+          <a class="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-white px-8 py-3 text-sm font-semibold text-[var(--color-text)] shadow-sm transition hover:border-[var(--color-primary)]/30" href="#services">
+            Разгледайте услугите
+          </a>
+        </div>
+
       </div>
-    </div>
-  </div>
-</section>
+
+      <div class="relative hidden lg:block self-start pt-4">
+        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--color-primary)]/10 via-[var(--color-surface-muted)] to-[var(--color-accent)]/10">
+          <div class="flex items-start justify-center px-7 pb-6 pt-5">
+            <div class="w-full space-y-4">
+              {
+                previewCards.map((card, index) => (
+                  <Card as="article" class:list={[
+                    "p-5 shadow-lg",
+                    index === 0 && "ml-6",
+                    index === 1 && "mr-6",
+                    index === 2 && "ml-10",
+                  ]}>
+                    <div class="flex items-center gap-4">
+                      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] [&_svg]:h-6 [&_svg]:w-6">
+                        <Fragment set:html={iconMap[card.icon]} />
+                      </span>
+                      <div>
+                        <p class="font-medium text-[var(--color-text)]">{card.title}</p>
+                        <p class="text-sm text-[var(--color-text-muted)]">{card.text}</p>
+                      </div>
+                    </div>
+                  </Card>
+                ))
+              }
+            </div>
+          </div>
+        </div>
+      </div>
+    </Grid>
+
+    <Grid class="mx-auto mt-8 max-w-3xl grid-cols-3 gap-6 border-t border-[var(--color-border)] pt-6">
+      {
+        stats.map((stat) => (
+          <StatItem value={stat.value} label={stat.label}>
+            <Fragment slot="icon" set:html={iconMap[stat.icon]} />
+          </StatItem>
+        ))
+      }
+    </Grid>
+  </Container>
+</Section>

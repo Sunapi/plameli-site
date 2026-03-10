@@ -1,76 +1,95 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import Card from "./ui/Card.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
 const benefits = [
-  "Безплатна първоначална консултация - без ангажимент",
-  "Прозрачни цени без скрити такси",
-  "Отговор до 24 часа",
+  "Консултации на български, украински и руски език",
+  "Коректни и надеждни решения според конкретния казус",
+  "Дългосрочно партньорство, конфиденциалност и високи стандарти",
 ];
 ---
 
-<section class="section" id="contact">
-  <div class="container contact-layout">
-    <div class="section-copy">
-      <p class="eyebrow">Свържете се с нас</p>
-      <h2>Дайте на бизнеса си сигурност и спокойствие</h2>
-      <p>
-        Оставете на нас сложността на счетоводството и данъчното съответствие, докато вие се фокусирате
-        върху най-важното - развитието на вашия бизнес. Заявете безплатна консултация още днес.
-      </p>
-
-      <ul class="check-list check-list-compact">
-        {benefits.map((benefit) => <li>{benefit}</li>)}
-      </ul>
-
-      <aside class="callout-card">
-        <p>Предпочитате разговор по телефона?</p>
-        <a href="tel:+35929876543">+359 2 987 6543</a>
-        <span>Понеделник - Петък, 9:00 - 18:00</span>
-      </aside>
-    </div>
-
-    <div class="form-card">
-      <h3>Заяви консултация</h3>
-      <form class="contact-form">
-        <div class="form-row">
-          <label>
-            <span>Име и фамилия</span>
-            <input type="text" name="name" placeholder="Вашето име" required />
-          </label>
-          <label>
-            <span>Име на компания</span>
-            <input type="text" name="company" placeholder="Вашата компания" />
-          </label>
-        </div>
-
-        <div class="form-row">
-          <label>
-            <span>Имейл</span>
-            <input type="email" name="email" placeholder="email@example.com" required />
-          </label>
-          <label>
-            <span>Телефон</span>
-            <input type="tel" name="phone" placeholder="+359..." />
-          </label>
-        </div>
-
-        <label>
-          <span>Интересуващи услуги</span>
-          <input type="text" name="services" placeholder="напр. счетоводство, данъчни консултации, ТРЗ" />
-        </label>
-
-        <label>
-          <span>Съобщение</span>
-          <textarea
-            name="message"
-            rows="4"
-            placeholder="Разкажете ни повече за вашия бизнес и нужди..."
-          ></textarea>
-        </label>
-
-        <button class="button button-primary button-full" type="submit">Изпрати запитване</button>
-        <p class="form-note">
-          С изпращането се съгласявате с нашата политика за поверителност. Ние уважаваме вашите данни.
+<Section id="contact" size="base" class="pt-14 pb-16 lg:pt-18 lg:pb-18">
+  <Container>
+    <Grid class="items-start gap-10 lg:grid-cols-2 lg:gap-12">
+      <div>
+        <SectionHeading
+          eyebrow="Контакти"
+          title="Осигурете си сигурност и спокойствие"
+          titleClass="sm:text-4xl"
+        />
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
+          Целта на Пламели Финанс е да ви спести ценно време, средства и усилия,
+          за да можете спокойно да развивате бизнеса си и да постигате целите си.
         </p>
-      </form>
-    </div>
-  </div>
-</section>
+
+        <div class="mt-8 space-y-4">
+          {
+            benefits.map((benefit) => (
+              <div class="flex items-start gap-3">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"></span>
+                <span class="text-[var(--color-text)]">{benefit}</span>
+              </div>
+            ))
+          }
+        </div>
+
+        <Card as="aside" class="mt-10 bg-[var(--color-surface-muted)] p-6">
+          <p class="text-sm text-[var(--color-text-muted)]">Свържете се директно с нас</p>
+          <a class="mt-1 block text-2xl font-semibold text-[var(--color-text)] transition hover:text-[var(--color-primary)]" href="tel:+359886843640">
+            +359 886 843 640
+          </a>
+          <p class="mt-2 text-sm text-[var(--color-text-muted)]">+359 2 423 2732</p>
+          <p class="mt-2 text-sm text-[var(--color-text-muted)]">гр. София, ул. Рачо Димчев 1А, ет.1, ап.2</p>
+        </Card>
+      </div>
+
+      <Card as="div" class="rounded-2xl p-8 shadow-lg lg:p-10">
+        <h3 class="mb-6 text-xl font-semibold text-[var(--color-text)]">Изпратете запитване</h3>
+        <form class="space-y-5">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="grid gap-2">
+              <span>Име и фамилия</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="name" placeholder="Вашето име" required />
+            </label>
+            <label class="grid gap-2">
+              <span>Име на компания</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="company" placeholder="Вашата компания" />
+            </label>
+          </div>
+
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="grid gap-2">
+              <span>Имейл</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="email" name="email" placeholder="email@example.com" required />
+            </label>
+            <label class="grid gap-2">
+              <span>Телефон</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="tel" name="phone" placeholder="+359..." />
+            </label>
+          </div>
+
+          <label class="grid gap-2">
+            <span>Интересуващи услуги</span>
+            <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="services" placeholder="напр. счетоводно обслужване, пейрол, регистрация на фирма" />
+          </label>
+
+          <label class="grid gap-2">
+            <span>Съобщение</span>
+            <textarea class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" name="message" rows="4" placeholder="Разкажете ни повече за вашия бизнес и нужди..."></textarea>
+          </label>
+
+          <button class="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--color-primary-dark)]" type="submit">
+            Изпрати запитване
+          </button>
+          <p class="text-center text-xs text-[var(--color-text-muted)]">
+            С изпращането се съгласявате с нашата политика за поверителност. Ние уважаваме вашите данни.
+          </p>
+        </form>
+      </Card>
+    </Grid>
+  </Container>
+</Section>

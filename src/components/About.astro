@@ -1,53 +1,73 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import Card from "./ui/Card.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
 const stats = [
-  { value: "15+", label: "Години опит" },
-  { value: "500+", label: "Доволни клиенти" },
-  { value: "20+", label: "Обслужвани индустрии" },
-  { value: "3", label: "Езика" },
+  { value: "2017", label: "Начало на Пламели Финанс" },
+  { value: "3", label: "Ключови експертни области" },
+  { value: "1", label: "София - основен офис" },
+  { value: "100%", label: "Фокус върху качество и коректност" },
 ];
 
 const highlights = [
-  "Сертифицирани счетоводители с богат опит",
-  "Задълбочено познаване на българското данъчно законодателство",
-  "Многоезичен екип - BG, UA, RU",
-  "Работим с клиенти от различни индустрии в цяла България",
-  "Модерни дигитални инструменти за ефективна работа",
-  "Ангажираност към дългосрочния успех на клиента",
+  "Създадена през 2017 г. в отговор на нуждата от качествено счетоводно-данъчно обслужване",
+  "Екип от професионалисти в счетоводството, корпоративните финанси, труда и осигуряването",
+  "Практически опит в данъчна оптимизация, планирано финансиране и бюджетирането",
+  "Фирмена философия, основана на доверие, честност и коректност",
+  "Устойчив бизнес модел и постоянна амбиция за самоусъвършенстване",
+  "Дългосрочни взаимоотношения, основани на взаимно уважение",
 ];
 ---
 
-<section class="section section-alt" id="about">
-  <div class="container two-column-layout">
-    <div class="showcase-panel">
-      <div class="stat-grid">
-        {
-          stats.map((stat) => (
-            <article class="showcase-stat">
-              <p>{stat.value}</p>
-              <span>{stat.label}</span>
-            </article>
-          ))
-        }
+<Section id="about" size="base" class="bg-[var(--color-surface-muted)] pt-10 pb-16 lg:pt-14 lg:pb-20">
+  <Container>
+    <Grid class="items-center gap-8 lg:grid-cols-2 lg:gap-12">
+      <div class="relative">
+        <div class="overflow-hidden rounded-2xl border border-[var(--color-border)] bg-gradient-to-br from-[var(--color-primary)]/5 via-white to-[var(--color-accent)]/5 p-8 lg:p-12">
+          <Grid class="grid-cols-2 gap-6">
+            {
+              stats.map((stat) => (
+                <Card as="article" class="p-6">
+                  <p class="[font-family:'Playfair_Display',serif] text-4xl font-medium text-[var(--color-primary)]">{stat.value}</p>
+                  <p class="mt-1 text-sm text-[var(--color-text-muted)]">{stat.label}</p>
+                </Card>
+              ))
+            }
+          </Grid>
+        </div>
       </div>
-    </div>
 
-    <div class="section-copy">
-      <p class="eyebrow">За нас</p>
-      <h2>Професионална счетоводна къща в София</h2>
-      <p>
-        Ние сме екип от отдадени счетоводни професионалисти, базирани в София, България.
-        Нашата мисия е да предоставяме на бизнеса и физическите лица надеждни, прозрачни
-        и ефективни финансови услуги, които им позволяват да се фокусират върху най-важното.
-      </p>
-      <p>
-        Работим с клиенти от различни сектори в цялата страна и знаем, че всеки
-        бизнес има своите специфични нужди. Нашият индивидуален подход гарантира,
-        че получавате решения, съобразени с вашата дейност и подкрепени от дълбока експертиза.
-      </p>
+      <div>
+        <SectionHeading
+          eyebrow="За нас"
+          title="История, философия и мисия"
+          titleClass="sm:text-4xl"
+        />
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
+          Счетоводна къща Пламели Финанс е създадена през 2017 г. в отговор на
+          нарастващата нужда от качествено счетоводно и данъчно обслужване.
+          С годините компанията разширява както клиентската си база, така и своя екип от специалисти.
+        </p>
+        <p class="mt-4 leading-relaxed text-[var(--color-text-muted)]">
+          Нашата мисия е да бъдем партньори на клиентите си, да разбираме техните
+          проблеми и нужди и да предлагаме компетентни и надеждни решения. Залагаме
+          на лоялността, екипността и високите стандарти на работа.
+        </p>
 
-      <ul class="check-list">
-        {highlights.map((highlight) => <li>{highlight}</li>)}
-      </ul>
-    </div>
-  </div>
-</section>
+        <ul class="mt-8 grid gap-3 sm:grid-cols-2">
+          {
+            highlights.map((highlight) => (
+              <li class="flex items-start gap-2.5">
+                <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"></span>
+                <span class="text-sm text-[var(--color-text)]">{highlight}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </Grid>
+  </Container>
+</Section>

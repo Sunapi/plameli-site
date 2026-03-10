@@ -1,4 +1,7 @@
 ---
+import Container from "./ui/Container.astro";
+import Badge from "./ui/Badge.astro";
+
 const services = [
   "Счетоводни услуги",
   "Данъчни консултации",
@@ -16,52 +19,54 @@ const company = [
 const languages = ["BG", "UA", "RU"];
 ---
 
-<footer class="site-footer">
-  <div class="container footer-grid">
-    <div>
-      <a class="brand brand-footer" href="/">
-        <img class="brand-logo" src="/plameli-logo.png" alt="Пламели Финанс" />
-        <span class="brand-text">Пламели Финанс</span>
-      </a>
-      <p class="footer-copy">
-        Професионални счетоводни и данъчни услуги в София, България.
-        Вашият надежден партньор за финансово спокойствие.
-      </p>
-      <div class="language-pills language-pills-dark">
-        {languages.map((language) => <span>{language}</span>)}
+<footer class="bg-[var(--color-footer)] text-[#f6eee7]">
+  <Container class="py-16 lg:py-20">
+    <div class="grid gap-12 lg:grid-cols-4">
+      <div>
+        <a class="flex items-center gap-3" href="/">
+          <img class="h-10 w-10 object-contain" src="/plameli-logo.png" alt="Пламели Финанс" />
+          <span class="text-xl font-semibold tracking-tight text-[#f6eee7]">Пламели Финанс</span>
+        </a>
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#f6eee7]/70">
+          Специализирани сме в областта на счетоводството и данъчното законодателство
+          и съпровождаме клиентите си при реализиране на техните бизнес идеи.
+        </p>
+        <div class="mt-6 flex gap-2">
+          {languages.map((language) => <Badge class="px-2 py-1 text-xs font-medium" variant="dark-soft">{language}</Badge>)}
+        </div>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Услуги</h3>
+        <ul class="mt-4 space-y-3">
+          {services.map((service) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href="#services">{service}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Компания</h3>
+        <ul class="mt-4 space-y-3">
+          {company.map((item) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href={item.href}>{item.name}</a></li>)}
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Контакти</h3>
+        <ul class="mt-4 space-y-4 text-sm text-[#f6eee7]/70">
+          <li>гр. София, ул. Рачо Димчев 1А, ет.1, ап.2</li>
+          <li><a class="transition hover:text-[#f6eee7]" href="tel:+359886843640">+359 886 843 640</a></li>
+          <li><a class="transition hover:text-[#f6eee7]" href="tel:+35924232732">+359 2 423 2732</a></li>
+          <li><a class="transition hover:text-[#f6eee7]" href="mailto:office@plameli.com">office@plameli.com</a></li>
+        </ul>
       </div>
     </div>
 
-    <div>
-      <h3>Услуги</h3>
-      <ul class="footer-list">
-        {services.map((service) => <li><a href="#services">{service}</a></li>)}
-      </ul>
+    <div class="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-8 sm:flex-row">
+      <p class="text-sm text-[#f6eee7]/50">© 2026 Пламели Финанс. Всички права запазени.</p>
+      <div class="flex gap-6">
+        <a class="text-sm text-[#f6eee7]/50 transition hover:text-[#f6eee7]" href="#">Политика за поверителност</a>
+        <a class="text-sm text-[#f6eee7]/50 transition hover:text-[#f6eee7]" href="#">Общи условия</a>
+      </div>
     </div>
-
-    <div>
-      <h3>Компания</h3>
-      <ul class="footer-list">
-        {company.map((item) => <li><a href={item.href}>{item.name}</a></li>)}
-      </ul>
-    </div>
-
-    <div>
-      <h3>Контакти</h3>
-      <ul class="footer-list footer-contact">
-        <li>123 Business Center, Floor 5, Sofia 1000, Bulgaria</li>
-        <li><a href="tel:+35929876543">+359 2 987 6543</a></li>
-        <li><a href="mailto:info@accountpro.bg">info@accountpro.bg</a></li>
-        <li>Пон - Пет: 9:00 - 18:00</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="container footer-bottom">
-    <p>© 2026 Пламели Финанс. Всички права запазени.</p>
-    <div class="footer-links">
-      <a href="#">Политика за поверителност</a>
-      <a href="#">Общи условия</a>
-    </div>
-  </div>
+  </Container>
 </footer>

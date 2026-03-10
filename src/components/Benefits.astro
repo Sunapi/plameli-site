@@ -1,55 +1,61 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
 const benefits = [
   {
-    title: "Спестете ценно време",
-    description: "Освободете се от сложни счетоводни задачи и административна работа. Използвайте времето си за развитие на бизнеса.",
+    title: "Спестявате време и ресурси",
+    description: "Избягвате разходите и времето за поддръжка на вътрешен счетоводител, ТРЗ специалист или цял отдел.",
   },
   {
-    title: "Намалете разходите",
-    description: "Външното счетоводно обслужване често е по-икономично от поддържането на вътрешен счетоводен отдел.",
+    title: "Без скъп специализиран софтуер",
+    description: "Не е нужно да инвестирате в скъпоструващи системи и тяхното последващо поддържане.",
   },
   {
-    title: "Без инвестиция в софтуер",
-    description: "Работим с професионален счетоводен софтуер вместо вас - без нужда от скъпи лицензи и обучения.",
+    title: "Без постоянни разходи за квалификация",
+    description: "Не поемате тежестта по непрекъснатото обучение на вътрешни специалисти при законодателни промени.",
   },
   {
-    title: "Достъп до специалисти",
-    description: "Получавате подкрепа от екип квалифицирани счетоводители и данъчни експерти без допълнителни разходи по наемане.",
+    title: "Получавате достъп до екип експерти",
+    description: "Разчитате на професионалисти в счетоводството, данъчните консултации, корпоративните финанси и ТРЗ.",
   },
   {
-    title: "Фокус върху основната дейност",
-    description: "Делегирайте финансовите задачи с увереност и се концентрирайте върху стратегическите си цели и растежа.",
+    title: "Фокус върху развитието на бизнеса",
+    description: "Вашият екип остава концентриран върху търговската дейност и целите на компанията.",
   },
   {
-    title: "Растете по-лесно",
-    description: "Нашите услуги се адаптират към нуждите на вашия бизнес с развитието му, без сложността на разширяване на вътрешен екип.",
+    title: "Сигурност и спокойствие",
+    description: "Работите с партньор, който следи динамичните промени в законодателството и ви подкрепя навреме.",
   },
 ];
 ---
 
-<section class="section">
-  <div class="container">
-    <div class="section-heading section-heading-centered">
-      <p class="eyebrow">Предимства</p>
-      <h2>Защо да възложите счетоводството си външно?</h2>
-      <p>
-        Съвременните компании все по-често избират професионален счетоводен партньор вместо вътрешен екип.
-        Ето как това може да бъде полезно за вашата организация.
-      </p>
-    </div>
+<Section size="base">
+  <Container>
+    <SectionHeading
+      class="mb-10"
+      align="center"
+      eyebrow="Предимства"
+      title="Защо все повече фирми избират външно счетоводно обслужване?"
+      description="При динамични промени в законодателството все повече компании търсят удобството и възможностите на външните счетоводни и консултантски услуги."
+    />
 
-    <div class="benefits-grid">
+    <Grid class="gap-8 md:grid-cols-2 lg:grid-cols-3">
       {
         benefits.map((benefit, index) => (
-          <article class="benefit-item">
-            <span class="benefit-number">{String(index + 1).padStart(2, "0")}</span>
+          <article class="relative flex gap-5">
+            <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)]/10 font-semibold text-[var(--color-primary)]">
+              {String(index + 1).padStart(2, "0")}
+            </span>
             <div>
-              <h3>{benefit.title}</h3>
-              <p>{benefit.description}</p>
+              <h3 class="font-semibold text-[var(--color-text)]">{benefit.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-[var(--color-text-muted)]">{benefit.description}</p>
             </div>
           </article>
         ))
       }
-    </div>
-  </div>
-</section>
+    </Grid>
+  </Container>
+</Section>

@@ -1,54 +1,90 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import Card from "./ui/Card.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
+const iconMap = {
+  building: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 21V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14M2 21h20M9 9h2M9 13h2M13 9h2M13 13h2M10 21v-4h4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  briefcase: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M9 6V4h6v2M3 9h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Zm0 0a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2M10 13h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+  `,
+  rocket: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M14 4c3 1 5 3 6 6-2.2 4.1-5.9 7.8-10 10-3-1-5-3-6-6 2.2-4.1 5.9-7.8 10-10Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M10 14 4 20M15 9h.01" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  `,
+  user: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8ZM5 20a7 7 0 0 1 14 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+    </svg>
+  `,
+  home: `
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1v-9.5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+    </svg>
+  `,
+};
+
 const clientTypes = [
   {
-    marker: "LC",
-    title: "Големи компании",
-    description: "Комплексно счетоводно и данъчно обслужване за утвърдени компании със сложни структури.",
+    icon: "building",
+    title: "Големи корпорации",
+    description: "За собственици и управители, които търсят надежден външен партньор с устойчив стандарт на работа.",
   },
   {
-    marker: "SM",
-    title: "Малки и средни предприятия",
-    description: "Пълно счетоводно обслужване, съобразено с мащаба на бизнеса и изискванията на индустрията.",
+    icon: "briefcase",
+    title: "Средни и малки предприятия",
+    description: "Гъвкаво обслужване, съобразено с ежедневните нужди на развиващия се бизнес.",
   },
   {
-    marker: "SU",
-    title: "Стартъпи",
-    description: "Стартирайте уверено. Помагаме на новите компании да изградят стабилна финансова основа.",
+    icon: "rocket",
+    title: "Нови бизнес идеи",
+    description: "Съпровождаме и представляваме клиентите при реализиране на нови бизнес начинания.",
   },
   {
-    marker: "EN",
+    icon: "user",
     title: "Предприемачи",
-    description: "Еднолични търговци и свободни професионалисти получават професионална подкрепа без излишни разходи.",
+    description: "Практична подкрепа за собственици, които искат да изградят стабилна и коректна финансова организация.",
   },
   {
-    marker: "PI",
-    title: "Физически лица",
-    description: "Лични данъчни консултации, декларации за доходи и услуги по финансово планиране.",
+    icon: "home",
+    title: "Частни лица",
+    description: "Консултации и услуги за физически лица, включително данъчни и административни казуси.",
   },
 ];
 ---
 
-<section class="section section-alt">
-  <div class="container">
-    <div class="section-heading section-heading-centered">
-      <p class="eyebrow">За кого работим</p>
-      <h2>Доверен партньор за бизнеси от всякакъв мащаб</h2>
-      <p>
-        От амбициозни стартъпи до утвърдени компании, адаптираме услугите си
-        спрямо конкретните нужди на вашия бизнес.
-      </p>
-    </div>
+<Section size="base" class="bg-[var(--color-surface-muted)]">
+  <Container>
+    <SectionHeading
+      class="mb-10"
+      align="center"
+      eyebrow="За кого работим"
+      title="Нашата целева група клиенти"
+      description="Според информацията на началната страница на Plameli.com, компанията работи с големи корпорации, средни и малки предприятия и частни лица."
+    />
 
-    <div class="client-grid">
+    <Grid class="gap-6 sm:grid-cols-2 lg:grid-cols-5">
       {
         clientTypes.map((client) => (
-          <article class="client-card">
-            <span class="client-icon">{client.marker}</span>
-            <h3>{client.title}</h3>
-            <p>{client.description}</p>
-          </article>
+          <Card as="article" class="flex h-full flex-col items-center text-center">
+            <span class="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] [&_svg]:h-8 [&_svg]:w-8">
+              <Fragment set:html={iconMap[client.icon]} />
+            </span>
+            <h3 class="font-semibold text-[var(--color-text)]">{client.title}</h3>
+            <p class="mt-2 flex-grow text-sm leading-relaxed text-[var(--color-text-muted)]">{client.description}</p>
+          </Card>
         ))
       }
-    </div>
-  </div>
-</section>
+    </Grid>
+  </Container>
+</Section>

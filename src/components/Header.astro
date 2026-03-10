@@ -1,4 +1,7 @@
 ---
+import Container from "./ui/Container.astro";
+import Badge from "./ui/Badge.astro";
+
 const navigation = [
   { name: "Услуги", href: "#services" },
   { name: "За нас", href: "#about" },
@@ -9,39 +12,43 @@ const navigation = [
 const languages = ["BG", "UA", "RU"];
 ---
 
-<header class="site-header">
-  <div class="container header-inner">
-    <a class="brand" href="/">
-      <img class="brand-logo" src="/plameli-logo.png" alt="Пламели Финанс" />
-      <span class="brand-text">Пламели Финанс</span>
+<header class="sticky top-0 z-50 border-b border-[rgba(228,218,203,0.7)] bg-[rgba(251,248,242,0.9)] backdrop-blur-[18px]">
+  <Container class="flex min-h-[4rem] items-center justify-between gap-4 lg:min-h-[4.25rem]">
+    <a class="inline-flex items-center gap-3" href="/">
+      <img class="h-9 w-9 object-contain lg:h-10 lg:w-10" src="/plameli-logo.png" alt="Пламели Финанс" />
+      <span class="text-[0.98rem] font-semibold tracking-tight text-[var(--color-primary)] lg:text-base">Пламели Финанс</span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary">
-      {navigation.map((item) => <a href={item.href}>{item.name}</a>)}
+    <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+      {navigation.map((item) => <a class="text-[0.95rem] text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]" href={item.href}>{item.name}</a>)}
     </nav>
 
-    <div class="header-actions">
-      <div class="language-pills" aria-label="Available languages">
-        {languages.map((language) => <span>{language}</span>)}
+    <div class="hidden items-center gap-4 lg:flex">
+      <div class="flex flex-wrap gap-2" aria-label="Available languages">
+        {languages.map((language) => <Badge class="px-2 py-1 text-[0.74rem] font-bold tracking-[0.08em]" variant="soft">{language}</Badge>)}
       </div>
-      <a class="phone-link" href="tel:+35929876543">+359 2 987 6543</a>
-      <a class="button button-primary" href="#contact">Заяви консултация</a>
+      <a class="text-[0.95rem] text-[var(--color-text-muted)] transition hover:text-[var(--color-text)]" href="tel:+35929876543">+359 2 987 6543</a>
+      <a class="inline-flex min-h-[2.55rem] items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white transition hover:bg-[var(--color-primary-dark)]" href="#contact">
+        Заяви консултация
+      </a>
     </div>
 
-    <details class="mobile-nav">
-      <summary aria-label="Open menu">
-        <span></span>
-        <span></span>
-        <span></span>
+    <details class="relative lg:hidden">
+      <summary class="grid w-11 list-none cursor-pointer gap-1 rounded-[0.8rem] border border-[var(--color-border)] px-2 py-2.5">
+        <span class="block h-0.5 rounded-full bg-[var(--color-text)]"></span>
+        <span class="block h-0.5 rounded-full bg-[var(--color-text)]"></span>
+        <span class="block h-0.5 rounded-full bg-[var(--color-text)]"></span>
       </summary>
-      <nav aria-label="Mobile">
-        {navigation.map((item) => <a href={item.href}>{item.name}</a>)}
-        <div class="language-pills" aria-label="Available languages">
-          {languages.map((language) => <span>{language}</span>)}
+      <nav class="absolute right-0 top-[calc(100%+0.75rem)] grid w-[min(20rem,calc(100vw-2rem))] gap-4 rounded-2xl border border-[var(--color-border)] bg-white p-5 shadow-[var(--shadow-card)]" aria-label="Mobile">
+        {navigation.map((item) => <a class="text-lg font-medium text-[var(--color-text)]" href={item.href}>{item.name}</a>)}
+        <div class="flex gap-2" aria-label="Available languages">
+          {languages.map((language) => <Badge class="px-2 py-1 text-[0.74rem] font-bold tracking-[0.08em]" variant="soft">{language}</Badge>)}
         </div>
-        <a class="phone-link" href="tel:+35929876543">+359 2 987 6543</a>
-        <a class="button button-primary" href="#contact">Заяви консултация</a>
+        <a class="text-[0.95rem] text-[var(--color-text-muted)]" href="tel:+35929876543">+359 2 987 6543</a>
+        <a class="inline-flex min-h-[2.55rem] items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-2.5 text-sm font-semibold text-white" href="#contact">
+          Заяви консултация
+        </a>
       </nav>
     </details>
-  </div>
+  </Container>
 </header>

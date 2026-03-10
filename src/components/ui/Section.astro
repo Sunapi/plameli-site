@@ -1,0 +1,19 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  size?: "tight" | "base" | "loose";
+}
+
+const { as: Tag = "section", class: className = "", size = "base" } = Astro.props;
+
+const sizeClasses = {
+  tight: "py-10 lg:py-14",
+  base: "py-14 lg:py-18",
+  loose: "py-16 lg:py-20",
+};
+---
+
+<Tag class:list={[sizeClasses[size], className]}>
+  <slot />
+</Tag>

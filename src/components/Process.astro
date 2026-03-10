@@ -1,4 +1,8 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
 const steps = [
   {
     number: "01",
@@ -28,29 +32,33 @@ const steps = [
 ];
 ---
 
-<section class="section" id="process">
-  <div class="container">
-    <div class="section-heading section-heading-centered">
-      <p class="eyebrow">Как работим</p>
-      <h2>Ясен и лесен път към финансова сигурност</h2>
-      <p>
-        Началото е лесно. Нашият структуриран процес осигурява плавен старт
-        и създава основа за успешно дългосрочно партньорство.
-      </p>
-    </div>
+<Section id="process" size="base">
+  <Container>
+    <SectionHeading
+      class="mb-10"
+      align="center"
+      eyebrow="Как работим"
+      title="Ясен и лесен път към финансова сигурност"
+      description="Началото е лесно. Нашият структуриран процес осигурява плавен старт и създава основа за успешно дългосрочно партньорство."
+    />
 
-    <div class="timeline">
-      {
-        steps.map((step) => (
-          <article class="timeline-item">
-            <span class="timeline-number">{step.number}</span>
-            <div class="timeline-copy">
-              <h3>{step.title}</h3>
-              <p>{step.description}</p>
-            </div>
-          </article>
-        ))
-      }
+    <div class="relative mx-auto max-w-4xl">
+      <div class="absolute bottom-0 left-[27px] top-0 hidden w-px bg-[var(--color-border)] md:block"></div>
+      <div class="space-y-8 md:space-y-10">
+        {
+          steps.map((step) => (
+            <article class="relative flex gap-6 md:gap-8">
+              <span class="relative z-10 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-lg font-semibold text-white shadow-lg">
+                {step.number}
+              </span>
+              <div class="flex-1 pb-8 pt-2">
+                <h3 class="text-xl font-semibold text-[var(--color-text)]">{step.title}</h3>
+                <p class="mt-2 leading-relaxed text-[var(--color-text-muted)]">{step.description}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
     </div>
-  </div>
-</section>
+  </Container>
+</Section>

@@ -1,0 +1,19 @@
+---
+interface Props {
+  as?: string;
+  class?: string;
+  variant?: "outline" | "soft" | "dark-soft";
+}
+
+const { as: Tag = "span", class: className = "", variant = "outline" } = Astro.props;
+
+const variants = {
+  outline: "rounded-full border border-[var(--color-border)] bg-white text-[var(--color-text-muted)]",
+  soft: "rounded-full bg-[rgba(243,88,40,0.09)] text-[var(--color-text-muted)]",
+  "dark-soft": "rounded bg-white/10 text-[#f6eee7]/80",
+};
+---
+
+<Tag class:list={["inline-flex items-center gap-2", variants[variant], className]}>
+  <slot />
+</Tag>

@@ -1,4 +1,10 @@
 ---
+import Container from "./ui/Container.astro";
+import Section from "./ui/Section.astro";
+import Grid from "./ui/Grid.astro";
+import Card from "./ui/Card.astro";
+import SectionHeading from "./ui/SectionHeading.astro";
+
 const languages = [
   {
     code: "BG",
@@ -18,27 +24,28 @@ const languages = [
 ];
 ---
 
-<section class="section section-highlight">
-  <div class="container languages-layout">
-    <div class="section-copy section-copy-on-dark">
-      <p class="eyebrow eyebrow-on-dark">Многоезична комуникация</p>
-      <h2>Говорим вашия език</h2>
-      <p>
-        Комуникацията е ключова за качественото обслужване. Нашият екип предлага консултации
-        и съдействие на три езика, така че нищо важно да не се губи в превода.
-      </p>
-    </div>
+<Section size="base" class="bg-gradient-to-br from-[var(--color-primary-dark)] to-[var(--color-primary)] text-[#fff7f3]">
+  <Container>
+    <Grid class="items-center gap-10 lg:grid-cols-2 lg:gap-12">
+      <SectionHeading
+        class="max-w-xl"
+        eyebrow="Многоезична комуникация"
+        title="Говорим вашия език"
+        description="Комуникацията е ключова за качественото обслужване. Нашият екип предлага консултации и съдействие на три езика, така че нищо важно да не се губи в превода."
+        invert={true}
+      />
 
-    <div class="language-card-row">
-      {
-        languages.map((language) => (
-          <article class="language-card">
-            <p>{language.code}</p>
-            <h3>{language.name}</h3>
-            <span>{language.description}</span>
-          </article>
-        ))
-      }
-    </div>
-  </div>
-</section>
+      <Grid class="gap-4 sm:grid-cols-3">
+        {
+          languages.map((language) => (
+            <Card as="article" class="min-w-0 border-white/20 bg-white/10 p-6 backdrop-blur-sm">
+              <p class="[font-family:'Playfair_Display',serif] text-3xl font-medium text-white">{language.code}</p>
+              <h3 class="mt-1 text-lg font-medium text-white">{language.name}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-white/70">{language.description}</p>
+            </Card>
+          ))
+        }
+      </Grid>
+    </Grid>
+  </Container>
+</Section>
