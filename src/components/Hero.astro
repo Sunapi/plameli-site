@@ -26,11 +26,11 @@ const iconMap = {
 };
 ---
 
-<Section size="tight" class="relative overflow-hidden bg-[var(--color-background)] pt-10 pb-8 lg:pt-14 lg:pb-10">
+<Section size="tight" class="relative overflow-hidden bg-[var(--color-background)] pt-10 pb-10 lg:pt-14 lg:pb-14">
   <div class="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,transparent_0%,transparent_49%,rgba(228,218,203,0.55)_49%,rgba(228,218,203,0.55)_51%,transparent_51%,transparent_100%)] bg-[length:120px_100%] opacity-30"></div>
   <Container class="relative">
-    <Grid class="items-start gap-10 lg:grid-cols-2 lg:gap-14">
-      <div class="max-w-[38rem] pt-2">
+    <div class="grid grid-cols-12 items-stretch gap-8 lg:gap-12">
+      <div class="col-span-12 flex flex-col justify-center lg:col-span-6">
         <Badge as="p" class="px-4 py-1.5 text-sm">
           <span class="h-2 w-2 rounded-full bg-[var(--color-accent)]"></span>
           {data.badge}
@@ -41,53 +41,69 @@ const iconMap = {
           titleAs="h1"
           title={data.title}
           description={data.description}
-          titleClass="mt-0 max-w-[12ch] text-3xl leading-[1.02] sm:text-4xl lg:text-5xl"
-          descriptionClass="mt-6 max-w-[34rem] text-[1.075rem] lg:text-[1.14rem]"
+          titleClass="mt-0 max-w-xl text-4xl font-semibold leading-tight lg:text-5xl"
+          descriptionClass="mt-6 max-w-lg text-lg leading-relaxed text-[var(--color-text-muted)]"
         />
 
-        <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <a class="inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-8 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-[var(--color-primary-dark)]" href={`${basePath}#contact`}>
+        <div class="mt-8 flex flex-col gap-4 sm:flex-row">
+          <a class="inline-flex items-center justify-center rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-600" href={`${basePath}#contact`}>
             {data.primaryCta}
           </a>
-          <a class="inline-flex items-center justify-center rounded-full border border-[var(--color-border)] bg-white px-8 py-3 text-sm font-semibold text-[var(--color-text)] shadow-sm transition hover:border-[var(--color-primary)]/30" href={`${basePath}#services`}>
+          <a class="inline-flex items-center justify-center rounded-xl border border-neutral-300 bg-white px-6 py-3 text-sm font-semibold text-[var(--color-text)] transition hover:bg-neutral-100" href={`${basePath}#services`}>
             {data.secondaryCta}
           </a>
         </div>
+
+        <Grid class="mt-8 max-w-xl grid-cols-3 gap-6 border-t border-[var(--color-border)] pt-6">
+          {
+            data.stats.map((stat) => (
+              <StatItem value={stat.value} label={stat.label}>
+                <Fragment slot="icon" set:html={iconMap[stat.icon]} />
+              </StatItem>
+            ))
+          }
+        </Grid>
       </div>
 
-      <div class="relative hidden self-start pt-4 lg:block">
-        <div class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[var(--color-primary)]/10 via-[var(--color-surface-muted)] to-[var(--color-accent)]/10">
-          <div class="flex items-start justify-center px-7 pb-6 pt-5">
-            <div class="w-full space-y-4">
+      <div class="col-span-12 lg:col-span-6">
+        <div class="relative max-w-xl lg:ml-auto lg:mt-6">
+          <div class="relative min-h-[26rem] overflow-hidden rounded-[2rem] border border-[var(--color-border)] bg-[var(--color-surface-muted)] shadow-[var(--shadow-soft)] lg:h-[33.5rem] lg:min-h-0">
+            <div class="absolute inset-0 bg-gradient-to-tr from-[rgba(243,88,40,0.08)] via-transparent to-[rgba(255,255,255,0.12)]"></div>
+            <img
+              class="h-full w-full object-cover object-center"
+              src="/hero-accounting.jpg"
+              alt=""
+              loading="eager"
+            />
+            <div class="absolute inset-0 bg-gradient-to-t from-[rgba(31,24,21,0.18)] via-transparent to-[rgba(31,24,21,0.04)]"></div>
+            <div class="absolute inset-x-0 bottom-0 p-5 sm:p-6">
+              <div class="ml-auto grid max-w-[90%] grid-cols-1 gap-4 sm:grid-cols-2">
               {
                 data.cards.map((card, index) => (
-                  <Card as="article" class:list={["p-5 shadow-lg", index === 0 && "ml-6", index === 1 && "mr-6", index === 2 && "ml-10"]}>
-                    <div class="flex items-center gap-4">
-                      <span class="inline-flex h-12 w-12 items-center justify-center rounded-full bg-[var(--color-primary)]/10 text-[var(--color-primary)] [&_svg]:h-6 [&_svg]:w-6">
+                  <Card
+                    as="article"
+                    class:list={[
+                      "border border-neutral-200 bg-white/96 p-5 shadow-sm backdrop-blur",
+                      index === 2 && "sm:col-span-2 sm:max-w-[76%]",
+                    ]}
+                  >
+                    <div class="flex items-start gap-3">
+                      <span class="inline-flex h-10 w-10 items-center justify-center rounded-lg bg-orange-100 text-[var(--color-primary)] [&_svg]:h-5 [&_svg]:w-5">
                         <Fragment set:html={iconMap[card.icon]} />
                       </span>
-                      <div>
-                        <p class="font-medium text-[var(--color-text)]">{card.title}</p>
-                        <p class="text-sm text-[var(--color-text-muted)]">{card.text}</p>
+                      <div class="min-w-0 pr-4">
+                        <p class="text-base font-medium leading-snug text-[var(--color-text)]">{card.title}</p>
+                        <p class="mt-1 text-sm leading-relaxed text-[var(--color-text-muted)]">{card.text}</p>
                       </div>
                     </div>
                   </Card>
                 ))
               }
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </Grid>
-
-    <Grid class="mx-auto mt-8 max-w-3xl grid-cols-3 gap-6 border-t border-[var(--color-border)] pt-6">
-      {
-        data.stats.map((stat) => (
-          <StatItem value={stat.value} label={stat.label}>
-            <Fragment slot="icon" set:html={iconMap[stat.icon]} />
-          </StatItem>
-        ))
-      }
-    </Grid>
+    </div>
   </Container>
 </Section>
