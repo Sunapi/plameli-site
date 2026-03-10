@@ -10,11 +10,13 @@ const languages = [
     code: "BG",
     name: "Български",
     description: "Пълна подкрепа за всички бизнес нужди в България",
+    flag: "bg",
   },
   {
     code: "UA",
     name: "Українська",
     description: "Пълно консултантско обслужване за украински клиенти",
+    flag: "ua",
   },
   {
     code: "RU",
@@ -39,8 +41,21 @@ const languages = [
         {
           languages.map((language) => (
             <Card as="article" class="min-w-0 border-white/20 bg-white/10 p-6 backdrop-blur-sm">
-              <p class="[font-family:'Playfair_Display',serif] text-3xl font-medium text-white">{language.code}</p>
-              <h3 class="mt-1 text-lg font-medium text-white">{language.name}</h3>
+              {language.flag === "bg" && (
+                <span class="inline-flex h-6 w-8 flex-col overflow-hidden rounded-[0.3rem] border border-white/25">
+                  <span class="h-1/3 w-full bg-white"></span>
+                  <span class="h-1/3 w-full bg-[#1faa59]"></span>
+                  <span class="h-1/3 w-full bg-[#d62612]"></span>
+                </span>
+              )}
+              {language.flag === "ua" && (
+                <span class="inline-flex h-6 w-8 flex-col overflow-hidden rounded-[0.3rem] border border-white/25">
+                  <span class="h-1/2 w-full bg-[#1f6fe5]"></span>
+                  <span class="h-1/2 w-full bg-[#ffd84d]"></span>
+                </span>
+              )}
+              {!language.flag && <p class="[font-family:'Playfair_Display',serif] text-3xl font-medium text-white">{language.code}</p>}
+              <h3 class="mt-3 text-lg font-medium text-white">{language.name}</h3>
               <p class="mt-2 text-sm leading-relaxed text-white/70">{language.description}</p>
             </Card>
           ))

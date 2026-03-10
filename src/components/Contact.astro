@@ -47,13 +47,17 @@ const benefits = [
         </Card>
       </div>
 
-      <Card as="div" class="rounded-2xl p-8 shadow-lg lg:p-10">
+      <Card as="div" id="contact-form" class="rounded-2xl p-8 shadow-lg lg:p-10">
         <h3 class="mb-6 text-xl font-semibold text-[var(--color-text)]">Изпратете запитване</h3>
-        <form class="space-y-5">
+        <form class="space-y-5" action="https://formsubmit.co/apichenok@gmail.com" method="POST">
+          <input type="hidden" name="_subject" value="Ново запитване от сайта Пламели Финанс" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+
           <div class="grid gap-5 sm:grid-cols-2">
             <label class="grid gap-2">
               <span>Име и фамилия</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="name" placeholder="Вашето име" required />
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="name" placeholder="Вашето име" required data-label="Име и фамилия" />
             </label>
             <label class="grid gap-2">
               <span>Име на компания</span>
@@ -64,7 +68,7 @@ const benefits = [
           <div class="grid gap-5 sm:grid-cols-2">
             <label class="grid gap-2">
               <span>Имейл</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="email" name="email" placeholder="email@example.com" required />
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="email" name="email" placeholder="email@example.com" required data-label="Имейл" />
             </label>
             <label class="grid gap-2">
               <span>Телефон</span>
@@ -93,3 +97,42 @@ const benefits = [
     </Grid>
   </Container>
 </Section>
+
+<script>
+  const messages = {
+    valueMissing: (label) => `Моля, попълнете полето "${label}".`,
+    typeMismatch: {
+      email: "Моля, въведете валиден имейл адрес.",
+      url: "Моля, въведете валиден адрес.",
+    },
+  };
+
+  const form = document.querySelector("#contact-form form");
+
+  if (form) {
+    const controls = form.querySelectorAll("input, textarea");
+
+    controls.forEach((control) => {
+      control.addEventListener("input", () => {
+        control.setCustomValidity("");
+      });
+
+      control.addEventListener("invalid", () => {
+        const label = control.dataset.label || "това поле";
+        const validity = control.validity;
+
+        if (validity.valueMissing) {
+          control.setCustomValidity(messages.valueMissing(label));
+          return;
+        }
+
+        if (validity.typeMismatch) {
+          control.setCustomValidity(messages.typeMismatch[control.type] || "Моля, въведете валидна стойност.");
+          return;
+        }
+
+        control.setCustomValidity("Моля, проверете въведената стойност.");
+      });
+    });
+  }
+</script>

@@ -5,7 +5,7 @@ interface Props {
   size?: "tight" | "base" | "loose";
 }
 
-const { as: Tag = "section", class: className = "", size = "base" } = Astro.props;
+const { as: Tag = "section", class: className = "", size = "base", ...rest } = Astro.props;
 
 const sizeClasses = {
   tight: "py-10 lg:py-14",
@@ -14,6 +14,6 @@ const sizeClasses = {
 };
 ---
 
-<Tag class:list={[sizeClasses[size], className]}>
+<Tag {...rest} class:list={["scroll-mt-24 lg:scroll-mt-28", sizeClasses[size], className]}>
   <slot />
 </Tag>
