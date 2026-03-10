@@ -1,0 +1,47 @@
+---
+const navigation = [
+  { name: "Услуги", href: "#services" },
+  { name: "За нас", href: "#about" },
+  { name: "Процес", href: "#process" },
+  { name: "Контакти", href: "#contact" },
+];
+
+const languages = ["BG", "UA", "RU"];
+---
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a class="brand" href="/">
+      <img class="brand-logo" src="/plameli-logo.png" alt="Пламели Финанс" />
+      <span class="brand-text">Пламели Финанс</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary">
+      {navigation.map((item) => <a href={item.href}>{item.name}</a>)}
+    </nav>
+
+    <div class="header-actions">
+      <div class="language-pills" aria-label="Available languages">
+        {languages.map((language) => <span>{language}</span>)}
+      </div>
+      <a class="phone-link" href="tel:+35929876543">+359 2 987 6543</a>
+      <a class="button button-primary" href="#contact">Заяви консултация</a>
+    </div>
+
+    <details class="mobile-nav">
+      <summary aria-label="Open menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </summary>
+      <nav aria-label="Mobile">
+        {navigation.map((item) => <a href={item.href}>{item.name}</a>)}
+        <div class="language-pills" aria-label="Available languages">
+          {languages.map((language) => <span>{language}</span>)}
+        </div>
+        <a class="phone-link" href="tel:+35929876543">+359 2 987 6543</a>
+        <a class="button button-primary" href="#contact">Заяви консултация</a>
+      </nav>
+    </details>
+  </div>
+</header>

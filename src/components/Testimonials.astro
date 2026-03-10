@@ -1,0 +1,47 @@
+---
+const testimonials = [
+  {
+    content: "Пламели Финанс преобрази финансовите ни процеси. Екипът разбира нашия сектор и дава навременни съвети, които ни спестиха значителни разходи.",
+    author: "Мария Петрова",
+    role: "Изпълнителен директор, TechStart Bulgaria",
+  },
+  {
+    content: "Като украински предприемач в България за мен беше решаващо да работя с консултанти, които говорят моя език. Професионални, надеждни и винаги на разположение.",
+    author: "Андрий Коваленко",
+    role: "Основател, Import Solutions",
+  },
+  {
+    content: "Работили сме с няколко счетоводни компании, но никоя не достигна нивото на лично отношение и експертиза, което получаваме от Пламели Финанс.",
+    author: "Георги Димитров",
+    role: "Управител, Balkan Logistics",
+  },
+];
+---
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading section-heading-centered">
+      <p class="eyebrow">Отзиви</p>
+      <h2>Какво казват нашите клиенти</h2>
+      <p>
+        Не разчитайте само на нашите думи. Чуйте мнението на собственици на бизнес,
+        които вече работят с Пламели Финанс.
+      </p>
+    </div>
+
+    <div class="card-grid card-grid-3">
+      {
+        testimonials.map((testimonial) => (
+          <article class="testimonial-card">
+            <p class="testimonial-stars">★★★★★</p>
+            <blockquote>{testimonial.content}</blockquote>
+            <footer>
+              <p>{testimonial.author}</p>
+              <span>{testimonial.role}</span>
+            </footer>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

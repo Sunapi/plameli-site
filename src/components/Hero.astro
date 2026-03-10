@@ -1,0 +1,63 @@
+---
+const stats = [
+  { value: "15+", label: "Години опит", icon: "C" },
+  { value: "500+", label: "Обслужени клиенти", icon: "U" },
+  { value: "100%", label: "Съответствие", icon: "S" },
+];
+
+const previewCards = [
+  { title: "Данъчно съответствие", text: "Винаги актуално", tone: "accent", icon: "S" },
+  { title: "Лична подкрепа", text: "Индивидуален подход", tone: "primary", icon: "U" },
+  { title: "15+ години", text: "Доказан опит", tone: "soft", icon: "C" },
+];
+---
+
+<section class="hero">
+  <div class="hero-grid container">
+    <div class="hero-copy">
+      <p class="eyebrow-pill">
+        <span class="status-dot"></span>
+        Доверен партньор на 500+ бизнеса в България
+      </p>
+      <h1>Вашият надежден счетоводен партньор в България</h1>
+      <p class="hero-lead">
+        Професионални счетоводни услуги, данъчни консултации и бизнес подкрепа.
+        Говорим вашия език. Консултации на български, украински
+        и руски език.
+      </p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#contact">Заяви консултация</a>
+        <a class="button button-secondary" href="#services">Виж услугите</a>
+      </div>
+      <div class="hero-stats">
+        {
+          stats.map((stat) => (
+            <div class="stat-card">
+              <span class="stat-icon">{stat.icon}</span>
+              <div>
+                <p class="stat-value">{stat.value}</p>
+                <p class="stat-label">{stat.label}</p>
+              </div>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-frame">
+        {
+          previewCards.map((card, index) => (
+            <article class={`preview-card preview-${card.tone} preview-offset-${index + 1}`}>
+              <span class="preview-icon">{card.icon}</span>
+              <div>
+                <h2>{card.title}</h2>
+                <p>{card.text}</p>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

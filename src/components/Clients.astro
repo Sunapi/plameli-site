@@ -1,0 +1,54 @@
+---
+const clientTypes = [
+  {
+    marker: "LC",
+    title: "Големи компании",
+    description: "Комплексно счетоводно и данъчно обслужване за утвърдени компании със сложни структури.",
+  },
+  {
+    marker: "SM",
+    title: "Малки и средни предприятия",
+    description: "Пълно счетоводно обслужване, съобразено с мащаба на бизнеса и изискванията на индустрията.",
+  },
+  {
+    marker: "SU",
+    title: "Стартъпи",
+    description: "Стартирайте уверено. Помагаме на новите компании да изградят стабилна финансова основа.",
+  },
+  {
+    marker: "EN",
+    title: "Предприемачи",
+    description: "Еднолични търговци и свободни професионалисти получават професионална подкрепа без излишни разходи.",
+  },
+  {
+    marker: "PI",
+    title: "Физически лица",
+    description: "Лични данъчни консултации, декларации за доходи и услуги по финансово планиране.",
+  },
+];
+---
+
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-heading section-heading-centered">
+      <p class="eyebrow">За кого работим</p>
+      <h2>Доверен партньор за бизнеси от всякакъв мащаб</h2>
+      <p>
+        От амбициозни стартъпи до утвърдени компании, адаптираме услугите си
+        спрямо конкретните нужди на вашия бизнес.
+      </p>
+    </div>
+
+    <div class="client-grid">
+      {
+        clientTypes.map((client) => (
+          <article class="client-card">
+            <span class="client-icon">{client.marker}</span>
+            <h3>{client.title}</h3>
+            <p>{client.description}</p>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,44 @@
+---
+const languages = [
+  {
+    code: "BG",
+    name: "Български",
+    description: "Пълна подкрепа за всички бизнес нужди в България",
+  },
+  {
+    code: "UA",
+    name: "Українська",
+    description: "Пълно консултантско обслужване за украински клиенти",
+  },
+  {
+    code: "RU",
+    name: "Русский",
+    description: "Пълна подкрепа за рускоговорящи клиенти",
+  },
+];
+---
+
+<section class="section section-highlight">
+  <div class="container languages-layout">
+    <div class="section-copy section-copy-on-dark">
+      <p class="eyebrow eyebrow-on-dark">Многоезична комуникация</p>
+      <h2>Говорим вашия език</h2>
+      <p>
+        Комуникацията е ключова за качественото обслужване. Нашият екип предлага консултации
+        и съдействие на три езика, така че нищо важно да не се губи в превода.
+      </p>
+    </div>
+
+    <div class="language-card-row">
+      {
+        languages.map((language) => (
+          <article class="language-card">
+            <p>{language.code}</p>
+            <h3>{language.name}</h3>
+            <span>{language.description}</span>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+---
+const services = [
+  "Счетоводни услуги",
+  "Данъчни консултации",
+  "ТРЗ и личен състав",
+  "Регистрация на фирма",
+  "Бизнес подкрепа",
+];
+
+const company = [
+  { name: "За нас", href: "#about" },
+  { name: "Как работим", href: "#process" },
+  { name: "Контакти", href: "#contact" },
+];
+
+const languages = ["BG", "UA", "RU"];
+---
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div>
+      <a class="brand brand-footer" href="/">
+        <img class="brand-logo" src="/plameli-logo.png" alt="Пламели Финанс" />
+        <span class="brand-text">Пламели Финанс</span>
+      </a>
+      <p class="footer-copy">
+        Професионални счетоводни и данъчни услуги в София, България.
+        Вашият надежден партньор за финансово спокойствие.
+      </p>
+      <div class="language-pills language-pills-dark">
+        {languages.map((language) => <span>{language}</span>)}
+      </div>
+    </div>
+
+    <div>
+      <h3>Услуги</h3>
+      <ul class="footer-list">
+        {services.map((service) => <li><a href="#services">{service}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h3>Компания</h3>
+      <ul class="footer-list">
+        {company.map((item) => <li><a href={item.href}>{item.name}</a></li>)}
+      </ul>
+    </div>
+
+    <div>
+      <h3>Контакти</h3>
+      <ul class="footer-list footer-contact">
+        <li>123 Business Center, Floor 5, Sofia 1000, Bulgaria</li>
+        <li><a href="tel:+35929876543">+359 2 987 6543</a></li>
+        <li><a href="mailto:info@accountpro.bg">info@accountpro.bg</a></li>
+        <li>Пон - Пет: 9:00 - 18:00</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="container footer-bottom">
+    <p>© 2026 Пламели Финанс. Всички права запазени.</p>
+    <div class="footer-links">
+      <a href="#">Политика за поверителност</a>
+      <a href="#">Общи условия</a>
+    </div>
+  </div>
+</footer>

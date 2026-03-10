@@ -1,0 +1,76 @@
+---
+const benefits = [
+  "Безплатна първоначална консултация - без ангажимент",
+  "Прозрачни цени без скрити такси",
+  "Отговор до 24 часа",
+];
+---
+
+<section class="section" id="contact">
+  <div class="container contact-layout">
+    <div class="section-copy">
+      <p class="eyebrow">Свържете се с нас</p>
+      <h2>Дайте на бизнеса си сигурност и спокойствие</h2>
+      <p>
+        Оставете на нас сложността на счетоводството и данъчното съответствие, докато вие се фокусирате
+        върху най-важното - развитието на вашия бизнес. Заявете безплатна консултация още днес.
+      </p>
+
+      <ul class="check-list check-list-compact">
+        {benefits.map((benefit) => <li>{benefit}</li>)}
+      </ul>
+
+      <aside class="callout-card">
+        <p>Предпочитате разговор по телефона?</p>
+        <a href="tel:+35929876543">+359 2 987 6543</a>
+        <span>Понеделник - Петък, 9:00 - 18:00</span>
+      </aside>
+    </div>
+
+    <div class="form-card">
+      <h3>Заяви консултация</h3>
+      <form class="contact-form">
+        <div class="form-row">
+          <label>
+            <span>Име и фамилия</span>
+            <input type="text" name="name" placeholder="Вашето име" required />
+          </label>
+          <label>
+            <span>Име на компания</span>
+            <input type="text" name="company" placeholder="Вашата компания" />
+          </label>
+        </div>
+
+        <div class="form-row">
+          <label>
+            <span>Имейл</span>
+            <input type="email" name="email" placeholder="email@example.com" required />
+          </label>
+          <label>
+            <span>Телефон</span>
+            <input type="tel" name="phone" placeholder="+359..." />
+          </label>
+        </div>
+
+        <label>
+          <span>Интересуващи услуги</span>
+          <input type="text" name="services" placeholder="напр. счетоводство, данъчни консултации, ТРЗ" />
+        </label>
+
+        <label>
+          <span>Съобщение</span>
+          <textarea
+            name="message"
+            rows="4"
+            placeholder="Разкажете ни повече за вашия бизнес и нужди..."
+          ></textarea>
+        </label>
+
+        <button class="button button-primary button-full" type="submit">Изпрати запитване</button>
+        <p class="form-note">
+          С изпращането се съгласявате с нашата политика за поверителност. Ние уважаваме вашите данни.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
