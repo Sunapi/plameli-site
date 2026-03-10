@@ -4,99 +4,38 @@ import Section from "./ui/Section.astro";
 import Grid from "./ui/Grid.astro";
 import Card from "./ui/Card.astro";
 import SectionHeading from "./ui/SectionHeading.astro";
+import { localePaths, siteData, type Locale } from "../i18n/site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = siteData[locale].services;
+const basePath = localePaths[locale];
 
 const iconMap = {
-  calculator: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <rect x="6" y="3" width="12" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
-      <path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-  `,
-  scale: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M12 4v16M6 7h12M9 20h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-      <path d="m7 7-3 5h6l-3-5Zm10 0-3 5h6l-3-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-    </svg>
-  `,
-  users: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8.5 10v-2a4 4 0 0 0-3-3.87M15.5 4.13a3.5 3.5 0 0 1 0 6.74" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  file: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M8 3h6l5 5v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-      <path d="M14 3v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-    </svg>
-  `,
-  building: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M4 21V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14M2 21h20M9 9h2M9 13h2M13 9h2M13 13h2M10 21v-4h4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
-  briefcase: `
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <path d="M9 6V4h6v2M3 9h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Zm0 0a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2M10 13h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-    </svg>
-  `,
+  calculator: `<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="3" width="12" height="18" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M9 7h6M9 11h2M13 11h2M9 15h2M13 15h2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  scale: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v16M6 7h12M9 20h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path d="m7 7-3 5h6l-3-5Zm10 0-3 5h6l-3-5Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>`,
+  users: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2M9.5 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7Zm8.5 10v-2a4 4 0 0 0-3-3.87M15.5 4.13a3.5 3.5 0 0 1 0 6.74" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  file: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3h6l5 5v11a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>`,
+  building: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V7a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v14M2 21h20M9 9h2M9 13h2M13 9h2M13 13h2M10 21v-4h4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  briefcase: `<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6V4h6v2M3 9h18v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9Zm0 0a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2M10 13h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
 };
-
-const services = [
-  {
-    icon: "calculator",
-    title: "Счетоводно обслужване",
-    description: "Ежедневно и текущо водене на счетоводството, съобразено с изискванията на действащото законодателство.",
-    features: ["Текущо счетоводно обслужване", "Организация на отчетността", "Подкрепа за бизнеса"],
-  },
-  {
-    icon: "scale",
-    title: "Данъчни и трудовоправни консултации",
-    description: "Съдействие по данъчно законодателство, трудови казуси, оптимизация и коректни решения според конкретната ситуация.",
-    features: ["Данъчни казуси", "Трудовоправни въпроси", "Практически решения"],
-  },
-  {
-    icon: "users",
-    title: "Пейрол",
-    description: "Администриране на работни заплати, осигуряване и свързаните процеси по обслужване на персонала.",
-    features: ["Работни заплати", "Осигуряване", "Администрация на персонала"],
-  },
-  {
-    icon: "file",
-    title: "Годишно приключване",
-    description: "Последният етап от текущото счетоводно обслужване с изготвяне на годишните документи и отчети.",
-    features: ["Годишна данъчна декларация", "Статистически отчети", "Годишен финансов отчет"],
-  },
-  {
-    icon: "briefcase",
-    title: "Административни услуги",
-    description: "Практическо съдействие по административни задължения и подаване на специфични декларации и уведомления.",
-    features: ["Деклариране пред БНБ", "Административно съдействие", "Регулаторни действия"],
-  },
-  {
-    icon: "building",
-    title: "Регистрация на фирма и промени в Търговския регистър",
-    description: "Съдействие при учредяване на дружество и при промени на обстоятелства в Търговския регистър.",
-    features: ["Регистрация на фирма", "Промени на обстоятелства", "Документално обслужване"],
-  },
-];
 ---
 
 <Section id="services" size="tight" class="pt-10 pb-10 lg:pt-14 lg:pb-14">
   <Container>
     <div class="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-      <SectionHeading
-        eyebrow="Нашите услуги"
-        title="Основните услуги на Пламели Финанс"
-        description="Пламели Финанс предлага широк набор от услуги на няколко нива за компании и физически лица, които търсят качествено обслужване, конкурентни цени и дългосрочно партньорство."
-      />
-      <a class="inline-flex self-start rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--color-text)] shadow-sm transition hover:border-[var(--color-primary)]/30" href="#contact">
-        Поискайте информация
+      <SectionHeading eyebrow={data.eyebrow} title={data.title} description={data.description} />
+      <a class="inline-flex self-start rounded-full border border-[var(--color-border)] bg-white px-6 py-3 text-sm font-semibold text-[var(--color-text)] shadow-sm transition hover:border-[var(--color-primary)]/30" href={`${basePath}#contact`}>
+        {data.cta}
       </a>
     </div>
 
     <Grid class="gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:gap-7">
       {
-        services.map((service) => (
+        data.items.map((service) => (
           <Card as="article" class="flex h-full flex-col transition hover:border-[var(--color-primary)]/30 hover:shadow-lg">
             <span class="mb-6 inline-flex h-14 w-14 items-center justify-center rounded-xl bg-[var(--color-surface-muted)] text-[var(--color-primary)] [&_svg]:h-7 [&_svg]:w-7">
               <Fragment set:html={iconMap[service.icon]} />
@@ -104,16 +43,9 @@ const services = [
             <h3 class="text-xl font-semibold text-[var(--color-text)]">{service.title}</h3>
             <p class="mt-3 flex-grow text-sm leading-relaxed text-[var(--color-text-muted)]">{service.description}</p>
             <ul class="mt-6 space-y-2 border-t border-[var(--color-border)] pt-6">
-              {
-                service.features.map((feature) => (
-                  <li class="flex items-center gap-2 text-sm text-[var(--color-text-muted)]">
-                    <span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>
-                    {feature}
-                  </li>
-                ))
-              }
+              {service.features.map((feature) => <li class="flex items-center gap-2 text-sm text-[var(--color-text-muted)]"><span class="h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"></span>{feature}</li>)}
             </ul>
-            <a class="mt-6 inline-flex text-sm font-medium text-[var(--color-primary)] hover:underline" href="#contact">Научете повече</a>
+            <a class="mt-6 inline-flex text-sm font-medium text-[var(--color-primary)] hover:underline" href={`${basePath}#contact`}>{data.learnMore}</a>
           </Card>
         ))
       }

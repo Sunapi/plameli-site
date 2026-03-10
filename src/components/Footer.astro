@@ -1,43 +1,20 @@
 ---
 import Container from "./ui/Container.astro";
 import Badge from "./ui/Badge.astro";
+import { localeNames, localePaths, sharedContact, siteData, type Locale } from "../i18n/site";
 
-const services = [
-  "Счетоводни услуги",
-  "Данъчни консултации",
-  "ТРЗ и личен състав",
-  "Регистрация на фирма",
-  "Бизнес подкрепа",
-];
+interface Props {
+  locale: Locale;
+}
 
-const company = [
-  { name: "За нас", href: "#about" },
-  { name: "Как работим", href: "#process" },
-  { name: "Контакти", href: "#contact" },
-];
+const { locale } = Astro.props;
+const data = siteData[locale];
+const activePath = localePaths[locale];
 
 const languages = [
-  {
-    code: "BG",
-    label: "Български",
-    flag: "bg",
-  },
-  {
-    code: "UA",
-    label: "Українська",
-    flag: "ua",
-  },
-  {
-    code: "RU",
-    label: "Русский",
-  },
-];
-
-const socialLinks = [
-  { name: "Facebook", href: "https://www.facebook.com/bgbuhgalter/", icon: "facebook" },
-  { name: "Instagram", href: "https://www.instagram.com/olenashopova/", icon: "instagram" },
-  { name: "YouTube", href: "https://www.youtube.com/@PlameliFinance-OlenaShopova", icon: "youtube" },
-  { name: "Telegram", href: "https://t.me/buhgalter_v_bolgarii", icon: "telegram" },
+  { code: "bg" as const, flag: "bg" as const },
+  { code: "ua" as const, flag: "ua" as const },
+  { code: "ru" as const },
 ];
 ---
 
@@ -45,62 +22,69 @@ const socialLinks = [
   <Container class="py-16 lg:py-20">
     <div class="grid gap-12 lg:grid-cols-4">
       <div>
-        <a class="flex items-center gap-3" href="/">
-          <img class="h-10 w-10 object-contain" src="/plameli-logo.png" alt="Пламели Финанс" />
-          <span class="text-xl font-semibold tracking-tight text-[#f6eee7]">Пламели Финанс</span>
+        <a class="flex items-center gap-3" href={activePath}>
+          <img class="h-10 w-10 object-contain" src="/plameli-logo.png" alt={data.footer.brand} />
+          <span class="text-xl font-semibold tracking-tight text-[#f6eee7]">{data.footer.brand}</span>
         </a>
-        <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#f6eee7]/70">
-          Специализирани сме в областта на счетоводството и данъчното законодателство и съпровождаме клиентите си при реализиране на техните бизнес идеи.
-        </p>
-        <div class="mt-6 flex gap-2">
+        <p class="mt-4 max-w-xs text-sm leading-relaxed text-[#f6eee7]/70">{data.footer.description}</p>
+        <div class="mt-6 flex items-center gap-2">
           {
             languages.map((language) => (
-              <Badge class="px-2.5 py-1 text-xs font-medium" variant="dark-soft" aria-label={language.label}>
-                {language.flag === "bg" && (
-                  <span class="inline-flex h-3.5 w-5 shrink-0 flex-col overflow-hidden rounded-[0.2rem] border border-white/20">
-                    <span class="h-1/3 w-full bg-white"></span>
-                    <span class="h-1/3 w-full bg-[#1faa59]"></span>
-                    <span class="h-1/3 w-full bg-[#d62612]"></span>
-                  </span>
-                )}
-                {language.flag === "ua" && (
-                  <span class="inline-flex h-3.5 w-5 shrink-0 flex-col overflow-hidden rounded-[0.2rem] border border-white/20">
-                    <span class="h-1/2 w-full bg-[#1f6fe5]"></span>
-                    <span class="h-1/2 w-full bg-[#ffd84d]"></span>
-                  </span>
-                )}
-                {!language.flag && <span>{language.code}</span>}
-              </Badge>
+              <a class="inline-flex" href={localePaths[language.code]} aria-label={localeNames[language.code]}>
+                <Badge
+                  class:list={[
+                    "h-[1.72rem] w-[2.43rem] items-center justify-center overflow-hidden rounded-full p-0 align-middle text-[0.7rem] font-semibold leading-none",
+                    language.flag ? "gap-0 border border-white/10 bg-white/5" : "",
+                    !language.flag && "border border-white/10 bg-white/10",
+                  ]}
+                  variant="dark-soft"
+                >
+                  {language.flag === "bg" && (
+                    <span class="inline-flex h-full w-full shrink-0 flex-col overflow-hidden rounded-full">
+                      <span class="h-1/3 w-full bg-white"></span>
+                      <span class="h-1/3 w-full bg-[#1faa59]"></span>
+                      <span class="h-1/3 w-full bg-[#d62612]"></span>
+                    </span>
+                  )}
+                  {language.flag === "ua" && (
+                    <span class="inline-flex h-full w-full shrink-0 flex-col overflow-hidden rounded-full">
+                      <span class="h-1/2 w-full bg-[#1f6fe5]"></span>
+                      <span class="h-1/2 w-full bg-[#ffd84d]"></span>
+                    </span>
+                  )}
+                  {!language.flag && <span>{language.code.toUpperCase()}</span>}
+                </Badge>
+              </a>
             ))
           }
         </div>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Услуги</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">{data.footer.servicesTitle}</h3>
         <ul class="mt-4 space-y-3">
-          {services.map((service) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href="#services">{service}</a></li>)}
+          {data.services.items.slice(0, 5).map((service) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href={`${activePath}#services`}>{service.title}</a></li>)}
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Компания</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">{data.footer.companyTitle}</h3>
         <ul class="mt-4 space-y-3">
-          {company.map((item) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href={item.href}>{item.name}</a></li>)}
+          {data.footer.companyLinks.map((item) => <li><a class="text-sm text-[#f6eee7]/70 transition hover:text-[#f6eee7]" href={`${activePath}${item.href}`}>{item.name}</a></li>)}
         </ul>
       </div>
 
       <div>
-        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">Контакти</h3>
+        <h3 class="text-sm font-semibold uppercase tracking-[0.18em] text-[#f6eee7]">{data.footer.contactsTitle}</h3>
         <ul class="mt-4 space-y-4 text-sm text-[#f6eee7]/70">
-          <li>гр. София, ул. Рачо Димчев 1А, ет.1, ап.2</li>
-          <li><a class="transition hover:text-[#f6eee7]" href="tel:+359886843640">+359 886 843 640</a></li>
-          <li><a class="transition hover:text-[#f6eee7]" href="tel:+35924232732">+359 242 327 32</a></li>
-          <li><a class="transition hover:text-[#f6eee7]" href="mailto:office@plameli.com">office@plameli.com</a></li>
+          <li>{sharedContact.address}</li>
+          <li><a class="transition hover:text-[#f6eee7]" href={`tel:${sharedContact.phones[0].replace(/\s+/g, "")}`}>{sharedContact.phones[0]}</a></li>
+          <li><a class="transition hover:text-[#f6eee7]" href={`tel:${sharedContact.phones[1].replace(/\s+/g, "")}`}>{sharedContact.phones[1]}</a></li>
+          <li><a class="transition hover:text-[#f6eee7]" href={`mailto:${sharedContact.email}`}>{sharedContact.email}</a></li>
         </ul>
         <div class="mt-6 flex items-center gap-3">
           {
-            socialLinks.map((link) => (
+            sharedContact.socials.map((link) => (
               <a
                 class="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-white/10 text-[#f6eee7]/70 transition hover:border-white/20 hover:text-[#f6eee7]"
                 href={link.href}
@@ -109,28 +93,10 @@ const socialLinks = [
                 aria-label={link.name}
                 title={link.name}
               >
-                {link.icon === "facebook" && (
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.2-1.5 1.5-1.5H16V5.1c-.5-.1-1.4-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H7.5v3h2.3v7h3.7Z" />
-                  </svg>
-                )}
-                {link.icon === "instagram" && (
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
-                    <rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect>
-                    <circle cx="12" cy="12" r="4"></circle>
-                    <circle cx="17.5" cy="6.5" r="1"></circle>
-                  </svg>
-                )}
-                {link.icon === "youtube" && (
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.8 2.8 0 0 0-2 2C2 9 2 12 2 12s0 3 .4 4.8a2.8 2.8 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.8 2.8 0 0 0 2-2C22 15 22 12 22 12s0-3-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z" />
-                  </svg>
-                )}
-                {link.icon === "telegram" && (
-                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                    <path d="M21.3 4.8 18.2 19c-.2 1-.8 1.3-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.5-.2l-10.4 6.6-4.5-1.4c-1-.3-1-.9.2-1.4L19.4 4c.8-.3 1.5.2 1.3.8Z" />
-                  </svg>
-                )}
+                {link.icon === "facebook" && <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 21v-7h2.3l.4-3h-2.7V9.2c0-.9.2-1.5 1.5-1.5H16V5.1c-.5-.1-1.4-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H7.5v3h2.3v7h3.7Z" /></svg>}
+                {link.icon === "instagram" && <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>}
+                {link.icon === "youtube" && <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.8 2.8 0 0 0-2-2C17.8 4.7 12 4.7 12 4.7s-5.8 0-7.6.5a2.8 2.8 0 0 0-2 2C2 9 2 12 2 12s0 3 .4 4.8a2.8 2.8 0 0 0 2 2c1.8.5 7.6.5 7.6.5s5.8 0 7.6-.5a2.8 2.8 0 0 0 2-2C22 15 22 12 22 12s0-3-.4-4.8ZM10 15.5v-7l6 3.5-6 3.5Z" /></svg>}
+                {link.icon === "telegram" && <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.3 4.8 18.2 19c-.2 1-.8 1.3-1.6.8l-4.5-3.3-2.2 2.1c-.2.2-.4.4-.8.4l.3-4.6 8.4-7.6c.4-.3-.1-.5-.5-.2l-10.4 6.6-4.5-1.4c-1-.3-1-.9.2-1.4L19.4 4c.8-.3 1.5.2 1.3.8Z" /></svg>}
               </a>
             ))
           }
@@ -138,19 +104,8 @@ const socialLinks = [
       </div>
     </div>
 
-    <div class="mt-16 flex flex-col gap-6 border-t border-white/10 pt-8 sm:flex-row sm:items-center sm:justify-between">
-      <p class="text-sm text-[#f6eee7]/50">© 2026 Пламели Финанс. Всички права запазени.</p>
-      <a
-        class="inline-flex h-11 w-11 items-center justify-center self-start rounded-full border border-white/10 bg-white/5 text-[#f6eee7]/70 transition hover:border-white/20 hover:bg-white/10 hover:text-[#f6eee7]"
-        href="#top"
-        aria-label="Обратно горе"
-        title="Обратно горе"
-      >
-        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true">
-          <path d="M12 19V5"></path>
-          <path d="m6 11 6-6 6 6"></path>
-        </svg>
-      </a>
+    <div class="mt-16 border-t border-white/10 pt-8">
+      <p class="text-sm text-[#f6eee7]/50">{data.footer.copyright}</p>
     </div>
   </Container>
 </footer>

@@ -1,36 +1,11 @@
 ---
 import MainLayout from "../layouts/MainLayout.astro";
-import Header from "../components/Header.astro";
-import Hero from "../components/Hero.astro";
-import Trust from "../components/Trust.astro";
-import Services from "../components/Services.astro";
-import About from "../components/About.astro";
-import Benefits from "../components/Benefits.astro";
-import Clients from "../components/Clients.astro";
-import Process from "../components/Process.astro";
-import Prices from "../components/Prices.astro";
-import Testimonials from "../components/Testimonials.astro";
-import Languages from "../components/Languages.astro";
-import Contact from "../components/Contact.astro";
-import Footer from "../components/Footer.astro";
-import BackToTop from "../components/BackToTop.astro";
+import LandingPage from "../components/LandingPage.astro";
+import { siteData } from "../i18n/site";
+
+const data = siteData.bg;
 ---
 
-<MainLayout>
-  <Header />
-  <main>
-    <Hero />
-    <Trust />
-    <Services />
-    <About />
-    <Benefits />
-    <Clients />
-    <Process />
-    <Prices />
-    <Testimonials />
-    <Languages />
-    <Contact />
-  </main>
-  <Footer />
-  <BackToTop />
+<MainLayout title={data.meta.title} description={data.meta.description} lang={data.meta.lang}>
+  <LandingPage locale="bg" />
 </MainLayout>

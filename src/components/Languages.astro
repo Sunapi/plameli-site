@@ -4,42 +4,24 @@ import Section from "./ui/Section.astro";
 import Grid from "./ui/Grid.astro";
 import Card from "./ui/Card.astro";
 import SectionHeading from "./ui/SectionHeading.astro";
+import { siteData, type Locale } from "../i18n/site";
 
-const languages = [
-  {
-    code: "BG",
-    name: "Български",
-    description: "Пълна подкрепа за всички бизнес нужди в България",
-    flag: "bg",
-  },
-  {
-    code: "UA",
-    name: "Українська",
-    description: "Пълно консултантско обслужване за украински клиенти",
-    flag: "ua",
-  },
-  {
-    code: "RU",
-    name: "Русский",
-    description: "Пълна подкрепа за рускоговорящи клиенти",
-  },
-];
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = siteData[locale].languages;
 ---
 
 <Section size="base" class="bg-gradient-to-br from-[var(--color-primary-dark)] to-[var(--color-primary)] text-[#fff7f3]">
   <Container>
     <Grid class="items-center gap-10 lg:grid-cols-2 lg:gap-12">
-      <SectionHeading
-        class="max-w-xl"
-        eyebrow="Многоезична комуникация"
-        title="Говорим вашия език"
-        description="Комуникацията е ключова за качественото обслужване. Нашият екип предлага консултации и съдействие на три езика, така че нищо важно да не се губи в превода."
-        invert={true}
-      />
+      <SectionHeading class="max-w-xl" eyebrow={data.eyebrow} title={data.title} description={data.description} invert={true} />
 
       <Grid class="gap-4 sm:grid-cols-3">
         {
-          languages.map((language) => (
+          data.items.map((language) => (
             <Card as="article" class="min-w-0 border-white/20 bg-white/10 p-6 backdrop-blur-sm">
               {language.flag === "bg" && (
                 <span class="inline-flex h-6 w-8 flex-col overflow-hidden rounded-[0.3rem] border border-white/25">

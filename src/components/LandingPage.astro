@@ -1,0 +1,40 @@
+---
+import type { Locale } from "../i18n/site";
+import Header from "./Header.astro";
+import Hero from "./Hero.astro";
+import Trust from "./Trust.astro";
+import Services from "./Services.astro";
+import About from "./About.astro";
+import Benefits from "./Benefits.astro";
+import Clients from "./Clients.astro";
+import Process from "./Process.astro";
+import Prices from "./Prices.astro";
+import Testimonials from "./Testimonials.astro";
+import Languages from "./Languages.astro";
+import Contact from "./Contact.astro";
+import Footer from "./Footer.astro";
+import BackToTop from "./BackToTop.astro";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+---
+
+<Header locale={locale} />
+<main>
+  <Hero locale={locale} />
+  <Trust locale={locale} />
+  <Services locale={locale} />
+  <About locale={locale} />
+  <Benefits locale={locale} />
+  <Clients locale={locale} />
+  <Process locale={locale} />
+  <Prices locale={locale} />
+  <Testimonials locale={locale} />
+  <Languages locale={locale} />
+  <Contact locale={locale} />
+</main>
+<Footer locale={locale} />
+<BackToTop />

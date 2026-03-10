@@ -1,0 +1,22 @@
+---
+import MainLayout from "../layouts/MainLayout.astro";
+import LandingPage from "../components/LandingPage.astro";
+import { isLocale, siteData, type Locale } from "../i18n/site";
+
+export function getStaticPaths() {
+  return [{ params: { locale: "ua" } }, { params: { locale: "ru" } }];
+}
+
+const localeParam = Astro.params.locale ?? "";
+
+if (!isLocale(localeParam) || localeParam === "bg") {
+  return Astro.redirect("/");
+}
+
+const locale = localeParam as Locale;
+const data = siteData[locale];
+---
+
+<MainLayout title={data.meta.title} description={data.meta.description} lang={data.meta.lang}>
+  <LandingPage locale={locale} />
+</MainLayout>

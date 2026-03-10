@@ -4,31 +4,26 @@ import Section from "./ui/Section.astro";
 import Grid from "./ui/Grid.astro";
 import Card from "./ui/Card.astro";
 import SectionHeading from "./ui/SectionHeading.astro";
+import { sharedContact, siteData, type Locale } from "../i18n/site";
 
-const benefits = [
-  "Консултации на български, украински и руски език",
-  "Коректни и надеждни решения според конкретния казус",
-  "Дългосрочно партньорство, конфиденциалност и високи стандарти",
-];
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = siteData[locale].contact;
 ---
 
 <Section id="contact" size="base" class="pt-14 pb-16 lg:pt-18 lg:pb-18">
   <Container>
     <Grid class="items-start gap-10 lg:grid-cols-2 lg:gap-12">
       <div>
-        <SectionHeading
-          eyebrow="Контакти"
-          title="Осигурете си сигурност и спокойствие"
-          titleClass="sm:text-4xl"
-        />
-        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">
-          Целта на Пламели Финанс е да ви спести ценно време, средства и усилия,
-          за да можете спокойно да развивате бизнеса си и да постигате целите си.
-        </p>
+        <SectionHeading eyebrow={data.eyebrow} title={data.title} titleClass="sm:text-4xl" />
+        <p class="mt-6 text-lg leading-relaxed text-[var(--color-text-muted)]">{data.description}</p>
 
         <div class="mt-8 space-y-4">
           {
-            benefits.map((benefit) => (
+            data.benefits.map((benefit) => (
               <div class="flex items-start gap-3">
                 <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-accent)]"></span>
                 <span class="text-[var(--color-text)]">{benefit}</span>
@@ -38,78 +33,70 @@ const benefits = [
         </div>
 
         <Card as="aside" class="mt-10 bg-[var(--color-surface-muted)] p-6">
-          <p class="text-sm text-[var(--color-text-muted)]">Свържете се директно с нас</p>
-          <a class="mt-1 block text-2xl font-semibold text-[var(--color-text)] transition hover:text-[var(--color-primary)]" href="tel:+359886843640">
-            +359 886 843 640
+          <p class="text-sm text-[var(--color-text-muted)]">{data.directLabel}</p>
+          <a class="mt-1 block text-2xl font-semibold text-[var(--color-text)] transition hover:text-[var(--color-primary)]" href={`tel:${sharedContact.phones[0].replace(/\s+/g, "")}`}>
+            {sharedContact.phones[0]}
           </a>
-          <p class="mt-2 text-sm text-[var(--color-text-muted)]">+359 242 327 32</p>
-          <p class="mt-2 text-sm text-[var(--color-text-muted)]">гр. София, ул. Рачо Димчев 1А, ет.1, ап.2</p>
+          <p class="mt-2 text-sm text-[var(--color-text-muted)]">{sharedContact.phones[1]}</p>
+          <p class="mt-2 text-sm text-[var(--color-text-muted)]">{data.address}</p>
         </Card>
       </div>
 
       <Card as="div" id="contact-form" class="rounded-2xl p-8 shadow-lg lg:p-10">
-        <h3 class="mb-6 text-xl font-semibold text-[var(--color-text)]">Изпратете запитване</h3>
-        <form class="space-y-5" action="https://formsubmit.co/apichenok@gmail.com" method="POST">
-          <input type="hidden" name="_subject" value="Ново запитване от сайта Пламели Финанс" />
+        <h3 class="mb-6 text-xl font-semibold text-[var(--color-text)]">{data.formTitle}</h3>
+        <form class="space-y-5" action="https://formsubmit.co/apichenok@gmail.com" method="POST" data-locale={locale}>
+          <input type="hidden" name="_subject" value={data.subject} />
           <input type="hidden" name="_captcha" value="false" />
           <input type="hidden" name="_template" value="table" />
 
           <div class="grid gap-5 sm:grid-cols-2">
             <label class="grid gap-2">
-              <span>Име и фамилия</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="name" placeholder="Вашето име" required data-label="Име и фамилия" />
+              <span>{data.fields.name}</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="name" placeholder={data.fields.namePlaceholder} required data-label={data.fields.name} />
             </label>
             <label class="grid gap-2">
-              <span>Име на компания</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="company" placeholder="Вашата компания" />
+              <span>{data.fields.company}</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="company" placeholder={data.fields.companyPlaceholder} />
             </label>
           </div>
 
           <div class="grid gap-5 sm:grid-cols-2">
             <label class="grid gap-2">
-              <span>Имейл</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="email" name="email" placeholder="email@example.com" required data-label="Имейл" />
+              <span>{data.fields.email}</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="email" name="email" placeholder={data.fields.emailPlaceholder} required data-label={data.fields.email} />
             </label>
             <label class="grid gap-2">
-              <span>Телефон</span>
-              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="tel" name="phone" placeholder="+359..." />
+              <span>{data.fields.phone}</span>
+              <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="tel" name="phone" placeholder={data.fields.phonePlaceholder} />
             </label>
           </div>
 
           <label class="grid gap-2">
-            <span>Интересуващи услуги</span>
-            <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="services" placeholder="напр. счетоводно обслужване, пейрол, регистрация на фирма" />
+            <span>{data.fields.services}</span>
+            <input class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" type="text" name="services" placeholder={data.fields.servicesPlaceholder} />
           </label>
 
           <label class="grid gap-2">
-            <span>Съобщение</span>
-            <textarea class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" name="message" rows="4" placeholder="Разкажете ни повече за вашия бизнес и нужди..."></textarea>
+            <span>{data.fields.message}</span>
+            <textarea class="rounded-xl border border-[var(--color-border)] bg-white px-4 py-3 text-[var(--color-text)] outline-none transition focus:border-[var(--color-primary)]/45 focus:ring-2 focus:ring-[var(--color-primary)]/20" name="message" rows="4" placeholder={data.fields.messagePlaceholder}></textarea>
           </label>
 
           <button class="inline-flex w-full items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-3 font-semibold text-white transition hover:bg-[var(--color-primary-dark)]" type="submit">
-            Изпрати запитване
+            {data.submit}
           </button>
-          <p class="text-center text-xs text-[var(--color-text-muted)]">
-            С изпращането се съгласявате с нашата политика за поверителност. Ние уважаваме вашите данни.
-          </p>
+          <p class="text-center text-xs text-[var(--color-text-muted)]">{data.privacy}</p>
         </form>
       </Card>
     </Grid>
   </Container>
 </Section>
 
-<script>
-  const messages = {
-    valueMissing: (label) => `Моля, попълнете полето "${label}".`,
-    typeMismatch: {
-      email: "Моля, въведете валиден имейл адрес.",
-      url: "Моля, въведете валиден адрес.",
-    },
-  };
-
+<script define:vars={{ validations: Object.fromEntries(Object.entries(siteData).map(([key, value]) => [key, value.contact.validation])) }}>
   const form = document.querySelector("#contact-form form");
 
-  if (form) {
+  if (form instanceof HTMLFormElement) {
+    const locale = form.dataset.locale || "bg";
+    const messages = validations[locale] || validations.bg;
     const controls = form.querySelectorAll("input, textarea");
 
     controls.forEach((control) => {
@@ -118,20 +105,20 @@ const benefits = [
       });
 
       control.addEventListener("invalid", () => {
-        const label = control.dataset.label || "това поле";
+        const label = control.dataset.label || messages.fallbackField;
         const validity = control.validity;
 
         if (validity.valueMissing) {
-          control.setCustomValidity(messages.valueMissing(label));
+          control.setCustomValidity(messages.fillField.replace("{label}", label));
           return;
         }
 
         if (validity.typeMismatch) {
-          control.setCustomValidity(messages.typeMismatch[control.type] || "Моля, въведете валидна стойност.");
+          control.setCustomValidity(control.type === "email" ? messages.invalidEmail : messages.invalidUrl);
           return;
         }
 
-        control.setCustomValidity("Моля, проверете въведената стойност.");
+        control.setCustomValidity(messages.invalidValue);
       });
     });
   }

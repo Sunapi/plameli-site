@@ -2,51 +2,24 @@
 import Container from "./ui/Container.astro";
 import Section from "./ui/Section.astro";
 import SectionHeading from "./ui/SectionHeading.astro";
+import { siteData, type Locale } from "../i18n/site";
 
-const steps = [
-  {
-    number: "01",
-    title: "Начална консултация",
-    description: "Започваме с безплатна консултация, за да разберем вашия бизнес, предизвикателства и цели. Възможна е на български, украински или руски език.",
-  },
-  {
-    number: "02",
-    title: "Анализ на нуждите",
-    description: "Екипът ни анализира текущото ви състояние и определя конкретните услуги и подкрепа, от които имате нужда.",
-  },
-  {
-    number: "03",
-    title: "Индивидуална оферта",
-    description: "Подготвяме персонализирано предложение с прозрачни цени и ясно описани услуги според вашите изисквания.",
-  },
-  {
-    number: "04",
-    title: "Плавно начало",
-    description: "След одобрение организираме плавен преход. Получавате личен специалист и сигурен достъп до нашите системи.",
-  },
-  {
-    number: "05",
-    title: "Дългосрочно партньорство",
-    description: "Получавате постоянна професионална подкрепа, навременни съвети и надеждно обслужване с развитието на вашия бизнес.",
-  },
-];
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const data = siteData[locale].process;
 ---
 
 <Section id="process" size="tight">
   <Container>
-    <SectionHeading
-      class="mb-6 lg:mb-8"
-      align="center"
-      eyebrow="Как работим"
-      title="Ясен и лесен път към финансова сигурност"
-      description="Началото е лесно. Нашият структуриран процес осигурява плавен старт и създава основа за успешно дългосрочно партньорство."
-    />
-
+    <SectionHeading class="mb-6 lg:mb-8" align="center" eyebrow={data.eyebrow} title={data.title} description={data.description} />
     <div class="relative mx-auto max-w-4xl">
       <div class="absolute bottom-0 left-[27px] top-0 hidden w-px bg-[var(--color-border)] md:block"></div>
       <div class="space-y-6 md:space-y-7">
         {
-          steps.map((step) => (
+          data.steps.map((step) => (
             <article class="relative flex gap-6 md:gap-8">
               <span class="relative z-10 inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-[var(--color-primary)] text-lg font-semibold text-white shadow-lg">
                 {step.number}
